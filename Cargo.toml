@@ -1,0 +1,89 @@
+[workspace]
+members = [
+    "core/runtime",
+    "core/compiler", 
+    "core/scheduler",
+    "core/jit",
+    "security/hss",
+    "security/xmss",
+    "security/watermark",
+    "security/auth",
+    "nephrazion/kernel",
+    "nephrazion/loader",
+    "nephrazion/patch",
+    "tools/compiler",
+    "tools/debugger", 
+    "tools/profiler",
+    "tools/deploy"
+]
+
+[workspace.package]
+version = "3.0.0"
+edition = "2021"
+license = "MIT"
+authors = ["NEXUS-X Team"]
+repository = "https://github.com/za3tar223/NEXUS-X"
+
+[workspace.dependencies]
+# Core dependencies
+tokio = { version = "1.35", features = ["full"] }
+async-trait = "0.1"
+futures = "0.3"
+bytes = "1.5"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.6", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+anyhow = "1.0"
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Security & Cryptography
+ring = "0.17"
+ed25519-dalek = "2.0"
+x25519-dalek = "2.0"
+chacha20poly1305 = "0.10"
+argon2 = "0.5"
+sha3 = "0.10"
+blake3 = "1.5"
+tpm2-tss = "0.4"
+
+# Performance & SIMD
+rayon = "1.8"
+crossbeam = "0.8"
+parking_lot = "0.12"
+dashmap = "5.5"
+wide = "0.7"
+bytemuck = "1.14"
+
+# Compilation & LLVM
+llvm-sys = "170"
+cranelift = "0.102"
+cranelift-jit = "0.102"
+wasmtime = "15.0"
+
+# Testing & Development
+criterion = { version = "0.5", features = ["html_reports"] }
+proptest = "1.4"
+mockall = "0.12"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+opt-level = 0
+debug = true
+strip = false
+
+[profile.test]
+opt-level = 1
+debug = true
+
+[profile.bench]
+opt-level = 3
+debug = false
